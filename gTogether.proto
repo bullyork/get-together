@@ -1,0 +1,68 @@
+syntax = "proto3";
+package gTogether;
+
+// 暂时
+
+message empty {
+}
+
+message applyInfo {
+  string pname = 1; // 人名
+  string sname = 2; // 店铺名
+  string owner = 3; // 友聚群名
+}
+
+message shop4owner {
+  string sname = 1;
+  string owner = 2;
+}
+
+message pInfo {
+  repeated string names = 1;
+}
+
+message result {
+  int32 code = 1;
+  string msg = 2;
+}
+
+message shopInfo {
+  string sname = 1; // 此字段暂时设为唯一，之后再做考虑
+  string address = 2;
+  string phoneNumber = 3;
+  string owner = 4;
+}
+
+message foodInfo {
+  string sname = 1; //店铺名
+  string fname = 2; //菜名
+  string owner = 4;
+  // string picture = 3;
+}
+
+message owner {
+  string owner = 1;
+}
+
+message shopList {
+  repeated shopInfo items = 1;
+}
+
+message foodList {
+  repeated foodInfo items = 1;
+}
+
+service gTogetherService {
+  //! 报名
+  rpc apply(applyInfo) returns (result)
+  //! 获取报名信息
+  rpc getApplyInfo(shop4owner) returns (pInfo)
+  //! 店铺录入
+  rpc shopRegister(shopInfo) returns (result)
+  //! 菜品录入
+  rpc foodRegister(foodInfo) returns (result)
+  //! 获取店铺
+  rpc listShops(owner) returns (shopList)
+  //! 获取菜品
+  rpc listFoods(shop4owner) returns (foodList)
+}
